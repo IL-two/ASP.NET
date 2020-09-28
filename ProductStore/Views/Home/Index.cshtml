@@ -1,0 +1,49 @@
+﻿@using WebApplication1.Models
+@model CategoryProduct
+    @{
+        ViewBag.Title = "Home Page";
+        ViewData["Name"] = "Index";
+    }
+
+    <div class="jumbotron">
+        <h2>Учет товаров</h2>
+        <p class="lead">Покупайте у нас. Мы будем рады!</p>
+    </div>
+
+    <form asp-controller="Models" asp-action="Index" method="get">
+        <p> 
+            Category: <select id="SelectList" asp-for="Products" asp-items="Model.CategoryProducts">
+                <option value="">All</option>
+            </select>
+
+            Name: <input class="control-label" type="text" name="SearchString" />
+            <input class = "btn btn-default" type="submit" value="Filter" />
+        </p>
+    </form>
+            <div class="row">
+                <div>
+                    <h3>Товары</h3>
+                    <table class="table">
+                        <tr>
+                            <td><p>Категория</p></td>
+                            <td><p>Наименование</p></td>
+                            <td><p>Цена</p></td>
+                            <td><p>Дата</p></td>
+                            <td></td>
+                        </tr>
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr>
+                                <td><p>@product.Category</p></td>
+                                <td><p>@product.Name</p></td>
+                                <td><p>@product.Price</p></td>
+                                <td><p>@product.Date</p></td>
+                                <td><p>@Html.ActionLink("Удалить", "Delete", new { id = product.Id }, htmlAttributes: new { @class = "btn btn-default" })</p></td>
+                            </tr>
+                        }
+                        <tr>
+                            <td><p><a class="btn btn-default" href="/Home/AddProduct">Добавить</a></p></td>                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
